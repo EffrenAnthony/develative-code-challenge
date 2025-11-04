@@ -1,36 +1,198 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rooming Management System
 
-## Getting Started
+A modern React application built with Next.js for managing rooming lists and bookings for events. The application provides an intuitive interface to view, search, and filter rooming data grouped by events.
 
-First, run the development server:
+## 🚀 Getting Started
 
+### Prerequisites
+
+- Node.js 18+ (check `.nvmrc` for recommended version)
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd my-app
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/rooming/       # API routes
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Main page
+├── components/            # Reusable UI components
+│   ├── ui/               # shadcn/ui components
+│   ├── RoomingCard.tsx   # Individual rooming list card
+│   ├── SearchBar.tsx     # Search functionality
+│   ├── StatusFilter.tsx  # Status filter dropdown
+│   ├── SkeletonLoader.tsx # Loading skeleton
+│   └── RoomingDivider.tsx # Event section divider
+├── data/                 # Static data files
+│   └── combined_rooming_data.json
+├── hooks/                # Custom React hooks
+│   └── useRoomingData.ts # Data fetching hook
+├── lib/                  # Utility functions
+│   ├── helpers.ts       # Date formatting helpers
+│   └── utils.ts         # General utilities
+├── providers/           # React context providers
+│   └── QueryProvider.tsx # TanStack Query provider
+├── stores/              # State management (future use)
+└── types/               # TypeScript type definitions
+    └── rooming.ts       # Rooming data types
+```
 
-## Learn More
+## 🏗️ Architecture
 
-To learn more about Next.js, take a look at the following resources:
+### Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: Next.js 16 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **State Management**: TanStack Query (React Query)
+- **UI Components**: Radix UI primitives via shadcn/ui
+- **Icons**: Lucide React
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Key Features
 
-## Deploy on Vercel
+#### 📊 Data Display
+- **Grouped by Events**: Rooming lists are organized by event names (e.g., "Rolling Loud", "Ultra Miami")
+- **Card-based Layout**: Each rooming list is displayed as a card with key information
+- **Responsive Design**: Grid layout that adapts to different screen sizes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### 🔍 Search & Filter
+- **Real-time Search**: Debounced search across RFP names and agreement types
+- **Status Filtering**: Multi-select dropdown filter for rooming statuses
+- **Skeleton Loading**: Visual feedback during search operations
+- **Save-based Filtering**: Filters are applied only when user clicks "Save"
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### 🎨 UI Components
+- **RoomingCard**: Displays individual rooming list information including:
+  - RFP name and agreement type
+  - Date range (calculated from bookings)
+  - Cut-off date badge
+  - Booking count button
+- **SearchBar**: Input field with search icon and debounced functionality
+- **StatusFilter**: Dropdown with checkboxes for status selection
+- **SkeletonLoader**: Loading state placeholders
+
+### Data Flow
+
+1. **Data Fetching**: `useRoomingData` hook fetches rooming data from `/api/rooming`
+2. **State Management**: React Query handles caching and loading states
+3. **Filtering**: Client-side filtering and searching on the fetched data
+4. **Grouping**: Data is grouped by event names for display
+5. **Rendering**: Components render the filtered and grouped data
+
+### API Structure
+
+The application uses a simple REST API:
+
+- **GET /api/rooming**: Returns all rooming list data
+- Data is served from `src/data/combined_rooming_data.json`
+
+### Type Definitions
+
+All TypeScript interfaces are centralized in `src/types/rooming.ts`:
+
+```typescript
+interface Booking {
+  bookingId: number;
+  hotelId: number;
+  eventId: number;
+  guestName: string;
+  guestPhoneNumber: string;
+  checkInDate: string;
+  checkOutDate: string;
+}
+
+interface RoomingList {
+  roomingListId: number;
+  eventId: number;
+  eventName: string;
+  hotelId: number;
+  rfpName: string;
+  cutOffDate: string;
+  status: string;
+  agreement_type: string;
+  bookings: Booking[];
+}
+```
+
+## 🛠️ Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+### Code Quality
+
+- **TypeScript**: Strict type checking enabled
+- **ESLint**: Code linting and formatting
+- **Tailwind CSS**: Utility-first CSS framework
+- **Component Architecture**: Modular, reusable components
+
+### Styling
+
+The application uses a custom design system built on Tailwind CSS with:
+- Custom color variables defined in `globals.css`
+- shadcn/ui component library for consistent UI
+- Responsive design patterns
+- Dark mode support (variables defined but not implemented)
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
+npm run build
+npm run start
+```
+
+### Deploy to Vercel
+
+The easiest way to deploy is using Vercel:
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Deploy automatically on every push
+
+## 🤝 Contributing
+
+1. Follow the existing code structure and naming conventions
+2. Use TypeScript for all new code
+3. Add proper type definitions for new features
+4. Test your changes thoroughly
+5. Follow the component separation principles
+
+## 📄 License
+
+This project is private and proprietary.
