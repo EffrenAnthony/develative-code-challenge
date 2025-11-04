@@ -36,8 +36,8 @@ export default function StatusFilter({ statuses, selectedStatuses, onApplyFilter
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
+          Filters
           <Filter className="h-4 w-4" />
-          Filter by Status
           {selectedStatuses.length > 0 && (
             <span className="bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs">
               {selectedStatuses.length}

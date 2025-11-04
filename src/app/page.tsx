@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Bookings by Event</h1>
+      <h1 className="text-2xl font-bold mb-6">Rooming List Management: Events</h1>
 
       {/* Search and Filter Controls */}
       <div className="flex gap-4 mb-6">
@@ -46,9 +46,11 @@ export default function Home() {
         Object.entries(filteredGroupedData).map(([eventName, roomings]) => (
           <div key={eventName} className="mb-8">
             <RoomingDivider eventName={eventName} />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="flex gap-4 overflow-x-auto pb-4">
               {roomings.map((rooming) => (
-                <RoomingCard key={rooming.roomingListId} roomingList={rooming} />
+                <div key={rooming.roomingListId} className="shrink-0 w-80">
+                  <RoomingCard roomingList={rooming} />
+                </div>
               ))}
             </div>
           </div>
