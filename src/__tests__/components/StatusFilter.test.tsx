@@ -19,7 +19,7 @@ describe('StatusFilter', () => {
       />
     );
 
-    expect(screen.getByText('Filter by Status')).toBeInTheDocument();
+    expect(screen.getByText('Filters')).toBeInTheDocument();
   });
 
   it('shows selected count when filters are applied', () => {
