@@ -19,7 +19,7 @@ export default function Home() {
     handleApplyFilters,
   } = useRoomingFilters();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div className="container mx-auto p-4"><SkeletonLoader /></div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

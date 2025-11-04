@@ -49,10 +49,14 @@ src/
 ├── components/            # Reusable UI components
 │   ├── ui/               # shadcn/ui components
 │   ├── RoomingCard.tsx   # Individual rooming list card
+│   ├── RoomingDivider.tsx # Event section divider
 │   ├── SearchBar.tsx     # Search functionality
-│   ├── StatusFilter.tsx  # Status filter dropdown
 │   ├── SkeletonLoader.tsx # Loading skeleton
-│   └── RoomingDivider.tsx # Event section divider
+│   └── StatusFilter.tsx  # Status filter dropdown
+├── __tests__/            # Unit tests
+│   ├── components/       # Component tests
+│   ├── hooks/           # Custom hook tests
+│   └── lib/            # Utility function tests
 ├── data/                 # Static data files
 │   └── combined_rooming_data.json
 ├── hooks/                # Custom React hooks
@@ -84,12 +88,19 @@ src/
 - **Grouped by Events**: Rooming lists are organized by event names (e.g., "Rolling Loud", "Ultra Miami")
 - **Card-based Layout**: Each rooming list is displayed as a card with key information
 - **Responsive Design**: Grid layout that adapts to different screen sizes
+- **Event Dividers**: Color-coded section dividers for each event
 
 #### 🔍 Search & Filter
 - **Real-time Search**: Debounced search across RFP names and agreement types
 - **Status Filtering**: Multi-select dropdown filter for rooming statuses
 - **Skeleton Loading**: Visual feedback during search operations
 - **Save-based Filtering**: Filters are applied only when user clicks "Save"
+
+#### 🧩 Component Architecture
+- **Modular Components**: Reusable UI components with clear responsibilities
+- **Custom Hooks**: Business logic extracted into testable hooks
+- **Type Safety**: Centralized TypeScript definitions
+- **Consistent Styling**: shadcn/ui components with Tailwind CSS
 
 #### 🎨 UI Components
 - **RoomingCard**: Displays individual rooming list information including:
@@ -152,6 +163,39 @@ interface RoomingList {
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm test` - Run Jest test suite
+- `npm run test:watch` - Run tests in watch mode
+
+### Testing
+
+The project includes a comprehensive unit testing setup using Jest and React Testing Library:
+
+#### Test Structure
+```
+src/__tests__/
+├── components/          # Component tests
+│   ├── RoomingCard.test.tsx
+│   ├── RoomingDivider.test.tsx
+│   ├── SearchBar.test.tsx
+│   ├── SkeletonLoader.test.tsx
+│   └── StatusFilter.test.tsx
+├── hooks/              # Custom hook tests
+│   └── useRoomingFilters.test.ts
+└── lib/               # Utility function tests
+    └── helpers.test.ts
+```
+
+#### Test Coverage
+- **Components**: Testing rendering, props, and basic interactions
+- **Custom Hooks**: Testing state management and side effects
+- **Utilities**: Testing pure functions and date formatting
+- **Integration**: Testing component composition and data flow
+
+#### Testing Stack
+- **Jest**: Test runner and assertion library
+- **React Testing Library**: Component testing utilities
+- **@testing-library/jest-dom**: Additional DOM matchers
+- **User Event**: User interaction simulation
 
 ### Code Quality
 
@@ -159,6 +203,8 @@ interface RoomingList {
 - **ESLint**: Code linting and formatting
 - **Tailwind CSS**: Utility-first CSS framework
 - **Component Architecture**: Modular, reusable components
+- **Custom Hooks**: Business logic separation
+- **Type Safety**: Centralized type definitions
 
 ### Styling
 
@@ -175,6 +221,25 @@ The application uses a custom design system built on Tailwind CSS with:
 ```bash
 npm run build
 npm run start
+```
+
+### CI/CD
+
+The project includes GitHub Actions for continuous integration:
+
+#### Workflow Triggers
+- **Push**: Runs on pushes to `main` and `develop` branches
+- **Pull Request**: Runs on PRs targeting `main` and `develop` branches
+
+#### CI Pipeline
+- **Multi-Node Testing**: Tests against Node.js 18.x and 20.x
+- **Linting**: Runs ESLint for code quality
+- **Unit Tests**: Executes Jest test suite with coverage
+- **Build**: Ensures production build succeeds
+
+#### Workflow File
+```yaml
+.github/workflows/ci.yml
 ```
 
 ### Deploy to Vercel
