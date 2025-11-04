@@ -14,7 +14,7 @@ A modern React application built with Next.js for managing rooming lists and boo
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd my-app
+cd develative-code-challenge
 ```
 
 2. Install dependencies:
